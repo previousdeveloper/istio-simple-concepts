@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: stage-product-detail-api-ds
+spec:
+  host: stage-product-detail-api
+  trafficPolicy:
+    connectionPool:
+      http:
+        http1MaxPendingRequests: 1
+        maxRequestsPerConnection: 1
+      tcp:
+        maxConnections: 1
+    outlierDetection:
+      baseEjectionTime: 180.000s
+      consecutiveErrors: 1
+      interval: 1.000s
+      maxEjectionPercent: 100

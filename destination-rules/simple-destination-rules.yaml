@@ -1,0 +1,10 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: stage-product-detail-api
+spec:
+  host: stage-product-detail-api
+  subsets:
+  - labels:
+      app: product-detail-api
+    name: stage

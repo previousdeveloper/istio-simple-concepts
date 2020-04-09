@@ -1,2 +1,4 @@
 # istio-simple-concepts
-[Destination Rules](destination_rules.md)
+[Destination Rules](destination-rules.md)
+[Virtual Service](virtual-service.md)
+
