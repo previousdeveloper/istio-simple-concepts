@@ -20,7 +20,7 @@ spec:
         subset: stage
 ``` 
 
-### Match Specific Path Virtual Service
+### HTTPMatchRequest Specific Uri Prefix Virtual Service
 
 ```yml
 kind: VirtualService
@@ -38,4 +38,94 @@ spec:
         host: stage-product-detail-api
         subset: stage
 
+``` 
+
+### HTTPMatchRequest Specific Uri Regex Virtual Service
+
+```yml
+kind: VirtualService
+metadata:
+  name: stage-product-detail-api
+spec:
+  hosts:
+  - stageproductdetailapi.trendyol.com
+  http:
+  - match:
+    - uri:
+        regex: /test
+    route:
+    - destination:
+        host: stage-product-detail-api
+        subset: stage
+
+``` 
+
+### HTTPMatchRequest Specific Header Regex Virtual Service
+
+```yml
+kind: VirtualService
+metadata:
+  name: stage-product-detail-api
+spec:
+  hosts:
+  - stageproductdetailapi.trendyol.com
+  http:
+  - match:
+    - headers:
+        user-agent: 
+            regex: '^.*(trendyol).*$'
+    route:
+    - destination:
+        host: stage-product-detail-api
+        subset: stage
+
+``` 
+
+### Timeout Virtual Service
+
+```yml
+kind: VirtualService
+metadata:
+  name: stage-product-detail-api
+spec:
+  hosts:
+  - stageproductdetailapi.trendyol.com
+  http:
+  - match:
+    - headers:
+        user-agent: 
+            regex: '^.*(trendyol).*$'
+  - timeout: 0.200s
+    route:
+    - destination:
+        host: stage-product-detail-api
+        subset: stage
+``` 
+
+It work with if your service in mesh. To control routing for traffic bound to services outside the mesh you need to create service entry and custom virtual service.
+
+### Network Fail Virtual Service (Injecting faults)
+
+```yml
+kind: VirtualService
+metadata:
+  name: stage-product-detail-api
+spec:
+  hosts:
+  - stageproductdetailapi.trendyol.com
+  http:
+  - match:
+    - headers:
+        user-agent: 
+            regex: '^.*(trendyol).*$'
+  - timeout: 0.200s
+    route:
+    - destination:
+        host: stage-product-detail-api
+        subset: stage
+    fault:
+      abort:
+        percentage:
+          value: 50
+        httpStatus: 5xx
 ``` 
