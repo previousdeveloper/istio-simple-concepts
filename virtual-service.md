@@ -1,4 +1,4 @@
-## Virtual Service
+## <u> Virtual Service </u>
 
 A VirtualService resource in much the same capacity as a traditional Kubernetes Ingress resource, in that a VirtualService resource matches traffic and directs it to a Service resource.
 

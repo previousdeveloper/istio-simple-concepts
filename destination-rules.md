@@ -1,4 +1,4 @@
-## Destination Rule
+## <u> Destination Rule </u>
 
 Destination rules serve as the single source of truth about which service versions are available to receive traffic from virtual services. You can use these resources to define policies that apply to traffic that is intended for a service after routing has occurred. Destination rules are describing  circuit breaking, load balancing, tls settings..
 
