@@ -2,7 +2,7 @@
 
 A VirtualService resource in much the same capacity as a traditional Kubernetes Ingress resource, in that a VirtualService resource matches traffic and directs it to a Service resource.
 
-However, a VirtualService resource can be much more specific in the traffic it matches and where that traffic is sent, it will operate on internal as well as external traffic, and offers a lot of additional functionality to manipulate traffic along the way. It can be combine with destination rule to foward traffic specific pod.
+Ho  ver, a VirtualService resource can be much more specific in the traffic it matches and where that traffic is sent, it will operate on internal as well as external traffic, and offers a lot of additional functionality to manipulate traffic along the way. It can be combine with destination rule to foward traffic specific pod.
 
 ### Simple Virtual Service
 
@@ -129,3 +129,63 @@ spec:
           value: 50
         httpStatus: 5xx
 ``` 
+
+### Network Delay Virtual Service (Unresponsive Application Test)
+
+```yml
+kind: VirtualService
+metadata:
+  name: stage-product-detail-api
+spec:
+  hosts:
+  - stageproductdetailapi.trendyol.com
+  http:
+    route:
+    - destination:
+        host: stage-product-detail-api
+        subset: stage
+    fault:
+      delay:
+        percentage:
+          value: 80
+        fixedDelay: 2s  
+``` 
+
+### Url Redirect Virtual Service (Unresponsive Application Test)
+
+```yml
+kind: VirtualService
+metadata:
+  name: stage-product-detail-api
+spec:
+  hosts:
+  - stageproductdetailapi.trendyol.com
+  http:
+    route:
+    - destination:
+        host: stage-product-detail-api
+        subset: stage
+    redirect:
+      uri: /_monitoring/health
+``` 
+
+### Retry When 5xx Error Virtual Service (Unresponsive Application Test)
+
+```yml
+kind: VirtualService
+metadata:
+  name: stage-product-detail-api
+spec:
+  hosts:
+  - stageproductdetailapi.trendyol.com
+  http:
+    route:
+    - destination:
+        host: stage-product-detail-api
+        subset: stage
+    retries:
+      attempts: 3
+      perTryTimeout: "2s"
+      retryOn: "5xx"
+``` 
+Retry any request that resulted in any 500 error code, up to 3 times.
