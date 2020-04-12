@@ -8,6 +8,7 @@ Ho  ver, a VirtualService resource can be much more specific in the traffic it m
 
 ```yml
 kind: VirtualService
+apiVersion: networking.istio.io/v1beta1
 metadata:
   name: stage-product-detail-api
 spec:
@@ -24,6 +25,7 @@ spec:
 
 ```yml
 kind: VirtualService
+apiVersion: networking.istio.io/v1beta1
 metadata:
   name: stage-product-detail-api
 spec:
@@ -44,6 +46,7 @@ spec:
 
 ```yml
 kind: VirtualService
+apiVersion: networking.istio.io/v1beta1
 metadata:
   name: stage-product-detail-api
 spec:
@@ -64,6 +67,7 @@ spec:
 
 ```yml
 kind: VirtualService
+apiVersion: networking.istio.io/v1beta1
 metadata:
   name: stage-product-detail-api
 spec:
@@ -85,6 +89,7 @@ spec:
 
 ```yml
 kind: VirtualService
+apiVersion: networking.istio.io/v1beta1
 metadata:
   name: stage-product-detail-api
 spec:
@@ -108,6 +113,7 @@ It work with if your service in mesh. To control routing for traffic bound to se
 
 ```yml
 kind: VirtualService
+apiVersion: networking.istio.io/v1beta1
 metadata:
   name: stage-product-detail-api
 spec:
@@ -134,6 +140,7 @@ spec:
 
 ```yml
 kind: VirtualService
+apiVersion: networking.istio.io/v1beta1
 metadata:
   name: stage-product-detail-api
 spec:
@@ -155,6 +162,7 @@ spec:
 
 ```yml
 kind: VirtualService
+apiVersion: networking.istio.io/v1beta1
 metadata:
   name: stage-product-detail-api
 spec:
@@ -173,6 +181,7 @@ spec:
 
 ```yml
 kind: VirtualService
+apiVersion: networking.istio.io/v1beta1
 metadata:
   name: stage-product-detail-api
 spec:
@@ -187,5 +196,24 @@ spec:
       attempts: 3
       perTryTimeout: "2s"
       retryOn: "5xx"
+``` 
+Retry any request that resulted in any 500 error code, up to 3 times.
+
+
+```yml
+kind: VirtualService
+apiVersion: networking.istio.io/v1beta1
+metadata:
+  name: gpim-read-service.external-timeout
+  namespace: external
+spec:
+  hosts:
+    - gpim-read-service.external.svc.stage-2sfront-idc
+  http:
+    - route:
+        - destination:
+            host: gpim-read-service
+      timeout: 1.001s
+
 ``` 
 Retry any request that resulted in any 500 error code, up to 3 times.
