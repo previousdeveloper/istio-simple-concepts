@@ -216,4 +216,28 @@ spec:
       timeout: 1.001s
 
 ``` 
-Retry any request that resulted in any 500 error code, up to 3 times.
+Kubernetes service without selector (External Mapping Endpoint)
+
+
+```yml
+kind: VirtualService
+apiVersion: networking.istio.io/v1beta1
+metadata:
+  name: gpim-read-service.external-timeout
+  namespace: external
+spec:
+  hosts:
+    - gpim-read-service.external.svc.stage-2sfront-idc
+  http:
+    - mirror:
+        host: data-mirror-collector
+      mirror_percent: 10
+      route:
+        - destination:
+            host: stage-product-detail-api
+            port:
+              number: 8082
+``` 
+
+Traffic Mirroring %10 percent
+
